@@ -1,0 +1,108 @@
+/* app css stylesheet */
+body {
+    margin-top: 10px;
+}
+
+input.completed {
+    text-decoration: line-through;
+}
+
+.task-label {
+    border: 0;
+    padding: 0;
+    box-shadow: none;
+    border-bottom: 1px solid #cccccc;
+    border-radius: 0;
+    background: transparent;
+}
+
+.tomoto-item:hover {
+    background-color: #cccccc
+}
+
+.menu {
+    list-style: none;
+    border-bottom: 0.1em solid black;
+    margin-bottom: 2em;
+    padding: 0 0 0.5em;
+}
+
+.menu:before {
+    content: "[";
+}
+
+.menu:after {
+    content: "]";
+}
+
+.menu > li {
+    display: inline;
+}
+
+.menu > li:before {
+    content: "|";
+    padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+    content: "";
+    padding: 0;
+}
+
+.ta-editor.ta-html, .ta-scroll-window.form-control {
+    min-height: 150px;
+}
+
+.ta-scroll-window > .ta-bind {
+    min-height: 150px;
+}
+
+.attachments {
+    display: block;
+    width: 100%;
+    clear: both;
+    float: left;
+}
+
+.attachment {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    float: left;
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 0 5px 5px 0;
+}
+
+.attachment img {
+    width: 100%;
+}
+
+.attachment .remove {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.timer {
+    text-align: center;
+    margin: 10px 0 20px 0;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: 20px 0 20px 0;
+}
+
+.timer span {
+    font-size: 80px;
+}
+
+
+#taskList .harvest-timer {
+    box-sizing: content-box;
+    background: #F57E18;
+}
+#taskList .harvest-timer-icon {
+    background-position: -12px 0;
+}
+/*# sourceMappingURL=app.css.map */

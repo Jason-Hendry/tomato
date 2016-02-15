@@ -1,0 +1,50 @@
+<div class="container" id="taskList">
+    <div class="row">
+        <div class="col-md-12 timer">
+            <h4>{{ timerLabel }}</h4>
+            <span ng-bind-html="timerDisplay"></span>
+            <br>
+            <input type="button" value="Stop" class="btn btn-danger" ng-disabled="!activeTimer()"
+                   ng-click="stopTimer()">
+        </div>
+    </div>
+
+    <div class="row tomoto-item" ng-repeat="item in list track by $index">
+        <div class="col-md-1 completed">
+            <input type="checkbox" ng-model="item.completed" ng-click="completed(item)" tabindex="-1"
+                   class="pull-right">
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control task-label" ng-class="item.style" ng-model="item.label"
+                   ng-blur="save()">
+        </div>
+        <div class="col-md-1">
+            &nbsp;
+            <i class="fa fa-clock-o" ng-if="!activeTimer()" ng-style="item.timerBtn" ng-click="startTimer(item)"></i>
+        </div>
+        <div class="col-md-2" ng-bind-html="item.timer">
+        </div>
+        <div class="col-md-1">
+            <i class="fa fa-times" ng-click="remove(item)"></i>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+            <input type="text" class="form-control  task-label" placeholder="..." ng-model="newLabel"
+                   ng-enter="create()">
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+            Add Times to Harvest
+            <div class="harvest-timer"
+                 data-item='{"id":1,"name":"Daily Time Pracker"}'
+                >
+            </div>
+        </div>
+        <div class="col-md-2 col-md-offset-1">
+            <button class="btn btn-danger" ng-click="clearTimes()">Clear Times</button>
+        </div>
+    </div>
+</div>
