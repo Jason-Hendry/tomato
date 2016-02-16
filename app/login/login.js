@@ -39,7 +39,7 @@ angular.module('myApp.login', ['ngRoute'])
                 var usersRef = $scope.myFirebaseRef.child('users/' + authData.uid);
                 usersRef.once('value', function (dataSnapshot) {
                     var data = dataSnapshot.val();
-                    if (data.timer != undefined) {
+                    if (data != null && data.timer != undefined) {
                         console.log("Go to (Existing): "+'/timer/' + data.timer);
                         $location.path('/timer/' + data.timer);
                         $scope.$apply();
@@ -53,7 +53,7 @@ angular.module('myApp.login', ['ngRoute'])
                         var timerRef = $scope.myFirebaseRef.child('timers/' + id);
                         timerRef.once('value', function (dataSnapshot) {
                             var data = dataSnapshot.val();
-                            if (data.uid != undefined) {
+                            if (data != null && data.uid != undefined) {
                                 $scope.message = 'Timer id conflict, try again';
                                 return false;
                             }

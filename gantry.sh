@@ -13,6 +13,6 @@ fi
 export BOWER_MAP="$BOWER_VOL:/source/app/bower_components";
 
 # deploy
-function deploy() {
-    ssh ubuntu@rain.systems bash -c "cd /var/www/tomato && git pull"
+function deploy2() {
+  ssh ubuntu@rain.systems bash -c "cd /var/www/tomato && git pull"
 }
