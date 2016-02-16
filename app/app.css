@@ -106,3 +106,16 @@ input.completed {
     background-position: -12px 0;
 }
 /*# sourceMappingURL=app.css.map */
+
+.google-login {
+    margin: 0;
+    padding: 0;
+    width: 191px;
+    height: 46px;
+    border: 0;
+    text-indent: -999em;
+    background: transparent url('https://developers.google.com/identity/images/btn_google_signin_light_normal_web.png')
+}
+.google-login:hover {
+    background-image: url('https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png')
+}

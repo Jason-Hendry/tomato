@@ -1,15 +1,18 @@
 'use strict';
 
-angular.module('myApp.view1', ['ngRoute'])
+angular.module('myApp.timer', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/view1', {
-            templateUrl: 'view1/view1.html',
-            controller: 'View1Ctrl'
+        $routeProvider.when('/timer/:id', {
+            templateUrl: 'timer/timer.html',
+            controller: 'TimerCtrl'
         });
     }])
 
-    .controller('View1Ctrl', ['$scope', '$sce', function ($scope, $sce) {
+    .controller('TimerCtrl', ['$scope', '$sce', '$routeParams', function ($scope, $sce, $routeParams) {
+        $scope.userId = $routeParams.id;
+
+        $scope.itemCounter = 0;
         $scope.list = [];
         $scope.newLabel = '';
 
@@ -41,7 +44,9 @@ angular.module('myApp.view1', ['ngRoute'])
                 completed: false,
                 style: '',
                 repeat: [],
-                timer: '00:00:00'
+                timer: '00:00:00',
+                id: $scope.itemCounter++,
+                work: []
             };
             item.harvest = $scope.harvest(item);
             $scope.list.push(item);
@@ -58,6 +63,8 @@ angular.module('myApp.view1', ['ngRoute'])
                     $scope.list = old;
                 }
             }
+            var c = localStorage.getItem('counter');
+            $scope.itemCounter = c ? c : 0;
         };
         $scope.repeat = function (item) {
             if (item.repeat == undefined) {
@@ -70,6 +77,7 @@ angular.module('myApp.view1', ['ngRoute'])
         };
         $scope.save = function () {
             localStorage.setItem('list', JSON.stringify($scope.list));
+            localStorage.setItem('counter', $scope.itemCounter);
         };
         $scope.paddThaim = function (num) {
             return num < 10 ? '0'+num : num;
@@ -112,15 +120,18 @@ angular.module('myApp.view1', ['ngRoute'])
             }, 1000)
             $scope.timerDisplay = '0:25:00';
             $scope.timerItem = item;
+            item.work.push({s:$scope.timerStart});
         };
         $scope.stopTimer = function () {
-            $scope.timerItem.started = false;
+            var item = $scope.timerItem;
+            item.started = false;
             $scope.timerInterval = null;
-            if ($scope.timerItem.totalTime == undefined) {
-                $scope.timerItem.totalTime = 0;
+            if (item.totalTime == undefined) {
+                item.totalTime = 0;
             }
-            $scope.timerItem.totalTime += $scope.timerElapsed;
-            $scope.timerItem.timer = $scope.displayTime($scope.timerItem.totalTime, 'black', true);
+            item.totalTime += $scope.timerElapsed;
+            item.timer = $scope.displayTime(item.totalTime, 'black', true);
+            item.work.push({t:new Date()});
             $scope.save();
 
             $scope.alert = false;
@@ -132,11 +143,12 @@ angular.module('myApp.view1', ['ngRoute'])
             }, 1000)
             $scope.timerDisplay = '0:05:00';
 
-            $scope.timerItem.harvest = $scope.harvest($scope.timerItem);
-            $("#harvest-messaging").trigger({
-                type: "harvest-event:timers:add",
-                element: $(".timetracker")
-            });
+            //
+            //item.harvest = $scope.harvest(item);
+            //$("#harvest-messaging").trigger({
+            //    type: "harvest-event:timers:add",
+            //    element: $(".timetracker")
+            //});
         };
         $scope.clearTimes = function() {
             for (var i = 0;i<$scope.list.length; i++) {
@@ -161,14 +173,12 @@ angular.module('myApp.view1', ['ngRoute'])
         };
         $scope.init = function () {
             $scope.load();
-
+            //$scope.updateData();
             if (Notification.permission !== "granted") {
                 Notification.requestPermission();
             }
             $scope.myFirebaseRef = new Firebase("https://blinding-inferno-4916.firebaseio.com/");
-
-
-
+            $scope.myFirebaseRef.onAuth($scope.authCallback);
         };
         $scope.break = function () {
 
@@ -187,5 +197,24 @@ angular.module('myApp.view1', ['ngRoute'])
         $scope.activeTimer = function () {
             return $scope.timerStart !== null && $scope.timerLabel !== 'Break';
         };
+
+        $scope.login = function() {
+            $scope.myFirebaseRef.authWithOAuthPopup("google", function(error, authData) {
+                if (error) {
+                    console.log("Login Failed!", error);
+                } else {
+                    console.log("Authenticated successfully with payload:", authData);
+                }
+            });
+        }
+
+        $scope.authCallback = function(authData) {
+            if (authData) {
+                console.log("User " + authData.uid + " is logged in with " + authData.provider);
+            } else {
+                console.log("User is logged out");
+            }
+        }
+
         $scope.init();
     }]);

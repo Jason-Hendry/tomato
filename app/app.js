@@ -11,8 +11,8 @@ angular.module('app.wysiwyg', [
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
     'ngRoute',
-    'myApp.view1',
-    'myApp.view2',
+    'myApp.timer',
+    'myApp.login',
     'myApp.version',
     'ngDraggable',
     'app.wysiwyg'
@@ -24,14 +24,14 @@ directive('ngEnter', function () {
                 scope.$apply(function () {
                     scope.$eval(attrs.ngEnter);
                 });
-
                 event.preventDefault();
             }
         });
     };
 }).
 config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.otherwise({redirectTo: '/view1'});
+
+    $routeProvider.otherwise({redirectTo: '/login'});
 }]);
 
 window.addEventListener("beforeunload", function (event) {
