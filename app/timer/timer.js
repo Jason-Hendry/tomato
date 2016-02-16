@@ -11,6 +11,8 @@ angular.module('myApp.timer', ['ngRoute'])
 
     .controller('TimerCtrl', ['$scope', '$sce', '$routeParams', function ($scope, $sce, $routeParams) {
         $scope.userId = $routeParams.id;
+        $scope.userFirstName = '';
+        $scope.profilePic = '';
 
         $scope.itemCounter = 0;
         $scope.list = [];
@@ -150,6 +152,19 @@ angular.module('myApp.timer', ['ngRoute'])
             //    element: $(".timetracker")
             //});
         };
+        $scope.submitTime = function(item) {
+            if(item.id == undefined) {
+                item.id = $scope.itemCounter++;
+            }
+            $scope.save();
+            HarvestPlatform.openIframe({
+                'service':document.location.href,
+                'item': {
+                    id:item.id,
+                    name:item.label
+                }
+            });
+        }
         $scope.clearTimes = function() {
             for (var i = 0;i<$scope.list.length; i++) {
                 $scope.list[i].totalTime = 0;
@@ -198,21 +213,16 @@ angular.module('myApp.timer', ['ngRoute'])
             return $scope.timerStart !== null && $scope.timerLabel !== 'Break';
         };
 
-        $scope.login = function() {
-            $scope.myFirebaseRef.authWithOAuthPopup("google", function(error, authData) {
-                if (error) {
-                    console.log("Login Failed!", error);
-                } else {
-                    console.log("Authenticated successfully with payload:", authData);
-                }
-            });
-        }
-
         $scope.authCallback = function(authData) {
             if (authData) {
-                console.log("User " + authData.uid + " is logged in with " + authData.provider);
+                $scope.userFirstName = authData.google.cachedUserProfile.given_name;
+                $scope.profilePic = authData.google.cachedUserProfile.picture;
+
+                //$scope.$apply();
+                console.log("User ", $scope.userFirstName, $scope.profilePic);
             } else {
-                console.log("User is logged out");
+                $location.path('/login');
+                //$scope.$apply();
             }
         }
 

@@ -1,6 +1,28 @@
 /* app css stylesheet */
 body {
-    margin-top: 10px;
+
+}
+
+.coolColour {
+    background-color: #69D2E7;
+}
+.coolColourLigter {
+    background-color: #A7DBDB;
+}
+.coolColourLigtest {
+    background-color: #E0E4CC;
+}
+.warnColour {
+    background-color: #FA6900;
+}
+.warmColourLigter {
+    background-color: #F38630;
+}
+
+.navbar {
+    margin-bottom: 0;
+    background-color: #A7DBDB;
+    border-radius: 0;
 }
 
 input.completed {
@@ -15,9 +37,14 @@ input.completed {
     border-radius: 0;
     background: transparent;
 }
-
+.tomoto-item {
+    line-height: 34px;
+}
+.tomoto-item input[type=checkbox] {
+    margin: 11px 0 0;
+}
 .tomoto-item:hover {
-    background-color: #cccccc
+    background-color: #69D2E7;
 }
 
 .menu {
@@ -87,8 +114,7 @@ input.completed {
 
 .timer {
     text-align: center;
-    margin: 10px 0 20px 0;
-    border-top: 1px solid #ccc;
+    margin: 0px 0 20px 0;
     border-bottom: 1px solid #ccc;
     padding: 20px 0 20px 0;
 }
@@ -118,4 +144,27 @@ input.completed {
 }
 .google-login:hover {
     background-image: url('https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png')
+}
+.profile {
+    padding: 6px 6px 0 0;
+    line-height: 34px;
+    color: #3b3b1f;
+}
+.profile img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.remove-icon {
+    background-color: rgba(254, 51, 25, 0.76);
+    padding: 3px;
+    color: #fff;
+    border-radius: 3px;
+}
+.harvest-icon {
+    background-color: #F57E18;
+    padding: 3px;
+    color: #fff;
+    border-radius: 3px;
 }

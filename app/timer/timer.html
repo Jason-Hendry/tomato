@@ -1,3 +1,10 @@
+<div class="navbar profile" ng-if="userFirstName">
+    <div class="pull-right">
+        <span>{{userFirstName}}</span>
+        <img ng-src="{{profilePic}}">
+    </div>
+</div>
+
 <div class="container" id="taskList">
     <div class="row">
         <div class="col-md-12 timer">
@@ -25,7 +32,8 @@
         <div class="col-md-2" ng-bind-html="item.timer">
         </div>
         <div class="col-md-1">
-            <i class="fa fa-times" ng-click="remove(item)"></i>
+            <i class="fa fa-times remove-icon" ng-click="remove(item)"></i>
+            <i class="fa fa-clock-o harvest-icon" ng-click="submitTime(item)" title="Add Time to "></i>
         </div>
     </div>
     <div class="row">
@@ -37,15 +45,9 @@
     <br>
     <div class="row">
         <div class="col-md-6 col-md-offset-1">
-            Add Times to Harvest
-            <div class="harvest-timer"
-                 data-item='{"id":1,"name":"Daily Time Pracker"}'
-                >
-            </div>
         </div>
         <div class="col-md-2 col-md-offset-1">
             <button class="btn btn-danger" ng-click="clearTimes()">Clear Times</button>
         </div>
-
     </div>
 </div>
