@@ -26,6 +26,8 @@ angular.module('myApp.timer', ['ngRoute'])
         $scope.timerLimit = 25 * 60;
         $scope.timerItem = null;
 
+        $scope.dailyTotal = '00:00:00';
+
         $scope.alert = false;
 
         $scope.myFirebaseRef = null;
@@ -35,11 +37,6 @@ angular.module('myApp.timer', ['ngRoute'])
                 'data-item=\'{"id":1,"name":"' + item.label + '"}\'>' +
                 '</div>');
         }
-
-        $scope.completed = function (item) {
-            item.style = item.completed ? 'completed' : '';
-            $scope.save();
-        };
         $scope.create = function () {
             var item = {
                 label: $scope.newLabel,
@@ -77,7 +74,20 @@ angular.module('myApp.timer', ['ngRoute'])
         $scope.removeRepeat = function (item) {
             item.repeat.shift();
         };
+
+        $scope.totalTime = function() {
+            var total = 0;
+            for(var i=0;i<$scope.list.length; i++) {
+                if($scope.list[i].totalTime != undefined) {
+                    total += $scope.list[i].totalTime;
+                }
+            }
+            $scope.dailyTotal = $scope.displayTime(total, 'black', true);
+        }
+
         $scope.save = function () {
+            $scope.totalTime();
+
             localStorage.setItem('list', JSON.stringify($scope.list));
             localStorage.setItem('counter', $scope.itemCounter);
         };
@@ -152,6 +162,11 @@ angular.module('myApp.timer', ['ngRoute'])
             //    element: $(".timetracker")
             //});
         };
+        $scope.completeTask = function() {
+            var item = $scope.timerItem;
+            item.completed = true;
+            $scope.stopTimer();
+        }
         $scope.submitTime = function(item) {
             if(item.id == undefined) {
                 item.id = $scope.itemCounter++;
@@ -194,6 +209,10 @@ angular.module('myApp.timer', ['ngRoute'])
             }
             $scope.myFirebaseRef = new Firebase("https://blinding-inferno-4916.firebaseio.com/");
             $scope.myFirebaseRef.onAuth($scope.authCallback);
+
+            window.addEventListener("beforeunload", function (event) {
+                event.returnValue = "Don't leave stuff will break";
+            });
         };
         $scope.break = function () {
 

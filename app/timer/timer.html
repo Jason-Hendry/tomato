@@ -13,21 +13,26 @@
             <br>
             <input type="button" value="Stop" class="btn btn-danger" ng-disabled="!activeTimer()"
                    ng-click="stopTimer()">
+            <input type="button" value="Complete" class="btn btn-success" ng-disabled="!activeTimer()"
+                   ng-click="completeTask()">
         </div>
     </div>
 
     <div class="row tomoto-item" ng-repeat="item in list track by $index">
         <div class="col-md-1 completed">
-            <input type="checkbox" ng-model="item.completed" ng-click="completed(item)" tabindex="-1"
-                   class="pull-right">
+            <!-- i class="fa fa-arrows-v drag-handle"></i -->
+            <!--<input type="checkbox" ng-model="item.completed" tabindex="-1"-->
+            <!--class="pull-right">-->
         </div>
         <div class="col-md-6">
-            <input type="text" class="form-control task-label" ng-class="item.style" ng-model="item.label"
+            <input type="text" class="form-control task-label" ng-class="{completed: item.completed}"
+                   ng-model="item.label"
                    ng-blur="save()">
         </div>
         <div class="col-md-1">
             &nbsp;
-            <i class="fa fa-clock-o" ng-if="!activeTimer()" ng-style="item.timerBtn" ng-click="startTimer(item)"></i>
+            <i class="fa fa-clock-o start-timer" ng-if="!activeTimer()" ng-style="item.timerBtn"
+               ng-click="startTimer(item)"></i>
         </div>
         <div class="col-md-2" ng-bind-html="item.timer">
         </div>
@@ -36,18 +41,16 @@
             <i class="fa fa-clock-o harvest-icon" ng-click="submitTime(item)" title="Add Time to "></i>
         </div>
     </div>
-    <div class="row">
+    <div class="row tomoto-item new-item">
         <div class="col-md-6 col-md-offset-1">
-            <input type="text" class="form-control  task-label" placeholder="..." ng-model="newLabel"
+            <input type="text" class="form-control  task-label" placeholder="New task ... (Enter)" ng-model="newLabel"
                    ng-enter="create()">
         </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-6 col-md-offset-1">
+        <div class="col-md-1 text-right"><strong>Total: </strong></div>
+        <div class="col-md-2" ng-bind-html="dailyTotal">
         </div>
-        <div class="col-md-2 col-md-offset-1">
-            <button class="btn btn-danger" ng-click="clearTimes()">Clear Times</button>
+        <div class="col-md-2">
+            <button class="btn btn-danger btn-sm" ng-click="clearTimes()">Clear Times</button>
         </div>
     </div>
 </div>

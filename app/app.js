@@ -34,10 +34,6 @@ config(['$routeProvider', function ($routeProvider) {
     $routeProvider.otherwise({redirectTo: '/login'});
 }]);
 
-window.addEventListener("beforeunload", function (event) {
-    event.returnValue = "Don't leave stuff will break";
-});
-
 (function () {
     window._harvestPlatformConfig = {
         "applicationName": "Tomato Timer"

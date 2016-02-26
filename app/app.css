@@ -46,6 +46,9 @@ input.completed {
 .tomoto-item:hover {
     background-color: #69D2E7;
 }
+.new-item:hover {
+    background-color: transparent;
+}
 
 .menu {
     list-style: none;
@@ -116,7 +119,7 @@ input.completed {
     text-align: center;
     margin: 0px 0 20px 0;
     border-bottom: 1px solid #ccc;
-    padding: 20px 0 20px 0;
+    padding: 10px 0 10px 0;
 }
 
 .timer span {
@@ -158,13 +161,20 @@ input.completed {
 
 .remove-icon {
     background-color: rgba(254, 51, 25, 0.76);
-    padding: 3px;
+    padding: 4px;
     color: #fff;
     border-radius: 3px;
 }
 .harvest-icon {
     background-color: #F57E18;
-    padding: 3px;
+    padding: 4px;
     color: #fff;
+    border-radius: 3px;
+    margin-left: 3px;
+}
+
+.start-timer {
+    background-color: #A7DBDB;
+    padding: 4px;
     border-radius: 3px;
 }
