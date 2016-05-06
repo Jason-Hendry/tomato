@@ -9,7 +9,7 @@ angular.module('myApp.timer', ['ngRoute'])
         });
     }])
 
-    .controller('TimerCtrl', ['$scope', '$sce', '$routeParams', function ($scope, $sce, $routeParams) {
+    .controller('TimerCtrl', ['$scope', '$sce', '$routeParams', '$location', function ($scope, $sce, $routeParams, $location) {
         $scope.userId = $routeParams.id;
         $scope.userFirstName = '';
         $scope.profilePic = '';
@@ -43,6 +43,7 @@ angular.module('myApp.timer', ['ngRoute'])
                 completed: false,
                 style: '',
                 repeat: [],
+                totalTime: 0,
                 timer: '00:00:00',
                 id: $scope.itemCounter++,
                 work: []
@@ -100,7 +101,32 @@ angular.module('myApp.timer', ['ngRoute'])
             var hours = Math.floor(sec/3600);
             var hr = hoursFloat === true ? ' ('+(Math.round(sec / 3600 * 100) / 100)+')' : '';
             return '<span style="color: ' + colour + ';">' + hours + ':'  + minutes + ':' + seconds + hr + '</span>';
-        }
+        };
+        $scope.addMinutes = function(item) {
+            var min = parseInt(prompt('Add Minutes:'))
+            if(!isNaN(min)) {
+                item.totalTime += min*60; // Convert Min - Sec
+            }
+            item.timer = $scope.displayTime(item.totalTime, 'black', true);
+        };
+        $scope.subMinutes = function(item) {
+            var minStr = prompt('Subtract Minutes (75) = 1h15m or Stop Time (6:05pm): ');
+            var timeOfDay = minStr.match(/^([0-9]+):0*([0-9]+)(am|pm)$/);
+            var min = 0;
+            if(timeOfDay) {
+                var n = new Date();
+                n.setTime(n - 86400000);
+                n.setHours(timeOfDay[3].toLowerCase()=='am' ? parseInt(timeOfDay[1]) : parseInt(timeOfDay[1]) + 12)
+                n.setMinutes(timeOfDay[2])
+                min = Date.now() - n.getTime() / 60000;
+            } else {
+                min = parseInt(minStr);
+            }
+            if(!isNaN(min)) {
+                item.totalTime -= min*60; // Convert Min - Sec
+            }
+            item.timer = $scope.displayTime(item.totalTime, 'black', true);
+        };
         $scope.tock = function () {
             var now = new Date();
             // Seconds
@@ -176,14 +202,18 @@ angular.module('myApp.timer', ['ngRoute'])
                 'service':document.location.href,
                 'item': {
                     id:item.id,
-                    name:item.label
+                    name:item.label.replace(/^.*:\s*/,'')
                 }
             });
         }
+
+        $scope.clearTime = function(item) {
+            item.totalTime = 0;
+            item.timer = '00:00:00';
+        }
         $scope.clearTimes = function() {
             for (var i = 0;i<$scope.list.length; i++) {
-                $scope.list[i].totalTime = 0;
-                $scope.list[i].timer = '00:00:00';
+                $scope.clearTime($scope.list[i]);
             }
             //$("link[rel='shortcut icon']").attr("href","favicon.ico");
         }

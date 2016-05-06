@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style type="text/css">
+        .planner {
+            position: absolute;
+            width: 100%;
+            top:100px;
+            left:0;
+            bottom: 0;
+            background-color: #e1edf7;
+        }
+        .task {
+            position: absolute;
+            background-color: #00A6C7;
+            width: 98%;
+            height: 10%;
+            border-radius: 2px;
+        }
+        .day {
+            position: absolute;
+            border-left: 1px solid #fff;
+            width: 18%;
+            height: 100%;
+        }
+        .monday { left: 5%; }
+        .tuesday { left: 23%; }
+        .wednesday { left: 41%; }
+        .thursday { left: 59%; }
+        .friday { left: 77%; border-right: 1px solid #fff; }
+
+        .time {
+            position: absolute;
+            border-top: 1px solid #fff;
+            width: 90%;
+            color: #fff;
+            text-indent: -2%;
+            left: 5%;
+        }
+        .time em {
+            position: absolute;
+            text-align: right;
+            right: 100%;
+            padding-right: 5px;
+        }
+        .freshStart { top: 5%; }
+        .midDay { top: 50%; }
+        .beerOclock { top: 95%; }
+    </style>
+</head>
+<body>
+
+<section class="planner">
+    <div class="day monday"></div>
+    <div class="day tuesday"></div>
+    <div class="day wednesday"></div>
+    <div class="day thursday"></div>
+    <div class="day friday"></div>
+
+    <div class="time freshStart"><em>9am</em></div>
+    <div class="time midDay"><em>12pm</em></div>
+    <div class="time beerOclock"><em>6pm</em></div>
+</section>
+
+<script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+<script type="application/javascript">
+    $(document).ready(function() {
+       $('.day').click(function(event) {
+
+           var eventPercentY =  event.offsetY / $(this).height() * 100;
+           var eventPercentX = event.offsetX / $(this).width() * 100;
+
+           console.log(event, eventPercentY, eventPercentX);
+
+           var $task = $('<div class="task"></div>');
+           $task.css({top:(eventPercentY-5)+'%', left:1+'%'});
+
+            $(this).append($task);
+       });
+    });
+</script>
+
+</body>
+</html>

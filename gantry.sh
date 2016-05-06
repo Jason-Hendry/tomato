@@ -14,5 +14,5 @@ export BOWER_MAP="$BOWER_VOL:/source/app/bower_components";
 
 # deploy
 function deploy2() {
-  ssh ubuntu@rain.systems bash -c "cd /var/www/tomato && git pull"
+  ssh ubuntu@rain.systems 'bash -c "cd /var/www/tomato; git pull"'
 }

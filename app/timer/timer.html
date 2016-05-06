@@ -17,28 +17,30 @@
                    ng-click="completeTask()">
         </div>
     </div>
-
-    <div class="row tomoto-item" ng-repeat="item in list track by $index">
-        <div class="col-md-1 completed">
-            <!-- i class="fa fa-arrows-v drag-handle"></i -->
-            <!--<input type="checkbox" ng-model="item.completed" tabindex="-1"-->
-            <!--class="pull-right">-->
-        </div>
-        <div class="col-md-6">
-            <input type="text" class="form-control task-label" ng-class="{completed: item.completed}"
-                   ng-model="item.label"
-                   ng-blur="save()">
-        </div>
-        <div class="col-md-1">
-            &nbsp;
-            <i class="fa fa-clock-o start-timer" ng-if="!activeTimer()" ng-style="item.timerBtn"
-               ng-click="startTimer(item)"></i>
-        </div>
-        <div class="col-md-2" ng-bind-html="item.timer">
-        </div>
-        <div class="col-md-1">
-            <i class="fa fa-times remove-icon" ng-click="remove(item)"></i>
-            <i class="fa fa-clock-o harvest-icon" ng-click="submitTime(item)" title="Add Time to "></i>
+    <div id="tomato-items">
+        <div class="row tomoto-item" ng-repeat="item in list track by $index">
+            <div class="col-md-1 completed">
+                <i class="fa fa-bars drag-handle"></i>
+                <input type="checkbox" ng-model="item.completed" tabindex="-1" class="pull-right">
+            </div>
+            <div class="col-md-5">
+                <input type="text" class="form-control task-label" ng-class="{completed: item.completed}"
+                       ng-model="item.label"
+                       ng-blur="save()">
+            </div>
+            <div class="col-md-2">
+                &nbsp;
+                <i class="fa fa-clock-o start-timer" ng-if="!activeTimer()" ng-style="item.timerBtn" ng-click="startTimer(item)"></i>
+                <i class="fa fa-plus start-timer" ng-if="!activeTimer()" ng-click="addMinutes(item)" title="Add Minutes"></i>
+                <i class="fa fa-minus start-timer" ng-if="!activeTimer()" ng-click="subMinutes(item)" title="Subtract Minutes"></i>
+            </div>
+            <div class="col-md-2" ng-bind-html="item.timer">
+            </div>
+            <div class="col-md-2">
+                <i class="fa fa-times remove-icon" ng-click="remove(item)"></i>
+                <i class="fa fa-clock-o harvest-icon" ng-click="submitTime(item)" title="Add Time to "></i>
+                <i class="fa fa-minus-circle harvest-icon" ng-click="clearTime(item)" title="Clear Task Time"></i>
+            </div>
         </div>
     </div>
     <div class="row tomoto-item new-item">
